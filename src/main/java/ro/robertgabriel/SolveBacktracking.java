@@ -8,9 +8,9 @@ import java.util.Set;
 public class SolveBacktracking {
     public static final int n = 9;
     private static Integer[][] startGrid = new Integer[9][9];
+    public static boolean printFlag = false;
 
     public static Integer[][] solve(Integer[][] grid) {
-        int first = 1;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {
                 startGrid[i][j] = grid[i][j];
@@ -23,22 +23,17 @@ public class SolveBacktracking {
 
     private static boolean addElement(Integer[][] grid, int i, int j) {
         int el = 1;
-
         if (!check(grid)) {
             return false;
         }
+        printBoard(grid);
         boolean reversedB = false;
         while (i <= 8 && j <= 8 && el <= 9) {
-            if (System.currentTimeMillis() / 1000 % 2 == 0) {
-
-                printBoard(grid);
-            }
             reversedB = false;
             if (grid[i][j] == null) {
                 grid[i][j] = el;
 
                 if (addElement(grid, i, j)) {
-
                     continue;
                 } else {
                     reversedB = true;
@@ -53,12 +48,10 @@ public class SolveBacktracking {
                 if (j == 8) {
                     i++;
                     j = 0;
-
                 } else {
                     j++;
                 }
             }
-
         }
         for (int k = 0; k < n; k++) {
             for (int l = 0; l < n; l++) {
@@ -67,105 +60,56 @@ public class SolveBacktracking {
                 }
             }
         }
-
         return true;
     }
 
-
-
     public static boolean check(Integer[][] grid) {
+        if (checkLines(grid)) return false;
+        return !checkSquares(grid);
+    }
+
+    private static boolean checkLines(Integer[][] grid) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 for (int k = i + 1; k < n; k++) {
                     if (grid[i][j] != null && k != i && grid[k][j] != null && grid[i][j].equals(grid[k][j])) {
-                        return false;
+                        return true;
                     }
                 }
                 for (int m = j + 1; m < n; m++) {
                     if (grid[i][j] != null && m != j && grid[i][m] != null && grid[i][j].equals(grid[i][m])) {
-                        return false;
+                        return true;
                     }
                 }
             }
         }
+        return false;
+    }
 
-        for (int i = 0; i < n; i++) {
-            int j = 0, k = 0, sj = 0, sk = 0;
-            switch (i) {
-                case (0):
-                    j = 0;
-                    k = 0;
-                    sj = 3;
-                    sk = 3;
-                    break;
-                case (1):
-                    j = 0;
-                    k = 3;
-                    sj = 3;
-                    sk = 6;
-                    break;
-                case (2):
-                    j = 0;
-                    k = 6;
-                    sj = 3;
-                    sk = 9;
-                    break;
-                case (3):
-                    j = 3;
-                    k = 0;
-                    sj = 6;
-                    sk = 3;
-                    break;
-                case (4):
-                    j = 3;
-                    k = 3;
-                    sj = 6;
-                    sk = 6;
-                    break;
-                case (5):
-                    j = 3;
-                    k = 6;
-                    sj = 6;
-                    sk = 9;
-                    break;
-                case (6):
-                    j = 6;
-                    k = 0;
-                    sj = 9;
-                    sk = 3;
-                    break;
-                case (7):
-                    j = 6;
-                    k = 3;
-                    sj = 9;
-                    sk = 6;
-                    break;
-                case (8):
-                    j = 6;
-                    k = 6;
-                    sj = 9;
-                    sk = 9;
-                    break;
-            }
-            List<Integer> testArray = new ArrayList<>();
-            for (int m = j; m < sj; m++) {
-                for (int l = k; l < sk; l++) {
-                    if (grid[m][l] != null) {
-                        testArray.add(grid[m][l]);
+    private static boolean checkSquares(Integer[][] grid) {
+        for (int i = 0; i < n; i = i + 3) {
+            for (int g = 0; g < n; g = g + 3) {
+                List<Integer> testArray = new ArrayList<>();
+                for (int m = i; m < i + 3; m++) {
+                    for (int l = g; l < g + 3; l++) {
+                        if (grid[m][l] != null) {
+                            testArray.add(grid[m][l]);
+                        }
                     }
                 }
-            }
-            Set<Integer> testSet = new HashSet<>(testArray);
-            if (testSet.size() != testArray.size()) {
-                return false;
+                Set<Integer> testSet = new HashSet<>(testArray);
+                if (testSet.size() != testArray.size()) {
+                    return true;
+                }
             }
         }
-
-
-        return true;
+        return false;
     }
 
     public static void printBoard(Integer[][] board) {
+        if (!printFlag) {
+            return;
+        }
         for (int i = 0; i < 9; i++) {
             System.out.print("|");
             for (int j = 0; j < 9; j++) {

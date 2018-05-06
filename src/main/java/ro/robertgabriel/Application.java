@@ -13,29 +13,8 @@ public class Application {
                 {null, null, null, 4, 1, 9, null, null, 5},
                 {null, null, null, null, 8, null, null, 7, 9}
         };
-
-        printBoard(board);
-
-        printBoard(SolveBacktracking.solve(board));
-    }
-
-    public static void printBoard(Integer[][] board) {
-        for (int i = 0; i < 9; i++) {
-            System.out.print("|");
-            for (int j = 0; j < 9; j++) {
-                String el = board[i][j] == null ? "-" : String.valueOf(board[i][j]);
-                System.out.print(" " + el + " ");
-                if (j % 3 == 2) {
-                    System.out.print("|");
-                }
-            }
-            if (i % 3 == 2) {
-                System.out.println();
-                for (int n = 0; n < 10 * 3 + 1; n++) {
-                    System.out.print("_");
-                }
-            }
-            System.out.println();
-        }
+        SolveBacktracking.printFlag = true;
+        SolveBacktracking.printBoard(board);
+        SolveBacktracking.printBoard(SolveBacktracking.solve(board));
     }
 }
