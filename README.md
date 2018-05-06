@@ -2,5 +2,5 @@
 [![Coverage Status](https://coveralls.io/repos/github/vjroby/backtracking-sudoku/badge.svg?branch=master)](https://coveralls.io/github/vjroby/backtracking-sudoku?branch=master)
 [![code quality](https://sonarcloud.io/dashboard?id=ro.robertgabriel%3Abacktracking-sudoku&metric=alert_status)](https://sonarcloud.io/dashboard?id=ro.robertgabriel%3Abacktracking-sudoku)
 
-# genetic-algorithm
-Genetic Algorithm implementation in java
+# Sudoku Backtraking
+Sudoku solver using backtracking
