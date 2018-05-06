@@ -1,23 +1,18 @@
 package ro.robertgabriel;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 public class SolveBacktracking {
     public static final int n = 9;
-    private static Integer[][] startGrid = new Integer[9][9];
     public static boolean printFlag = false;
-
     public static Integer[][] solve(Integer[][] grid) {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid.length; j++) {
-                startGrid[i][j] = grid[i][j];
-            }
-        }
         boolean solved = addElement(grid, 0, 0);
-        System.out.println("Solved:" + solved);
         return grid;
     }
 

@@ -38,6 +38,34 @@ public class SolveBacktrackingTest {
     }
 
     @Test
+    public void shouldNotSolve() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,1,null,null,4,null,null},
+                {1,null,null,null,4,null,null,null,null},
+                {null,2,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,9},
+                {null,null,null,null,null,null,null,8,null},
+                {null,null,null,null,null,null,7,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {1,4,1,null,5,null,null,6,null}
+        };
+
+        Integer[][] checked = SolveBacktracking.solve(grid);
+        boolean hasNulls = false;
+        for (int i = 0; i <9; i++) {
+            for (int j = 0; j < 9; j++) {
+              if(checked[i][j] == null){
+                  hasNulls = true;
+                  break;
+              }
+            }
+        }
+        assertTrue(hasNulls);
+    }
+
+
+    @Test
     public void shouldCheckInvalidFirstGrid() throws Exception{
         Integer[][] grid = {
                 {6,3,4,6,7,8,9,1,2},//0.0 <- error, should be 5
