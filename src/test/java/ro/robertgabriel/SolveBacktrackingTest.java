@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class SolveBacktrackingTest {
 
@@ -33,6 +35,231 @@ public class SolveBacktrackingTest {
             }
         }
         return board;
+    }
+
+    @Test
+    public void shouldCheckInvalidFirstGrid() throws Exception{
+        Integer[][] grid = {
+                {6,3,4,6,7,8,9,1,2},//0.0 <- error, should be 5
+                {6,7,2,1,9,5,3,4,8},
+                {1,9,8,3,4,2,5,6,7},
+                {8,5,9,7,6,1,4,2,3},
+                {4,2,6,8,5,3,7,9,1},
+                {7,1,3,9,2,4,8,5,6},
+                {9,6,1,5,3,7,2,8,4},
+                {2,8,7,4,1,9,6,3,5},
+                {3,4,5,2,8,6,1,4,9}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+
+    @Test
+    public void shouldCheckInvalid2Grid() throws Exception{
+        Integer[][] grid = {
+                {5,3,4,6,7,8,9,1,2},//0.0 <- error, should be 5
+                {6,7,2,1,9,5,3,4,8},
+                {1,9,8,3,4,2,5,6,7},
+                {8,5,9,7,6,1,4,2,3},
+                {4,2,6,8,5,3,7,9,1},
+                {7,1,3,9,2,4,8,5,6},
+                {9,6,1,5,3,7,2,8,4},
+                {2,8,7,4,1,9,6,3,5},
+                {3,4,5,9,8,6,1,4,9}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+
+    @Test
+    public void shouldCheckInvalidGridSquare1() throws Exception{
+        Integer[][] grid = {
+                {5,3,4,6,7,8,9,1,2},
+                {6,7,3,1,9,5,null,4,8}, // 3 is twice in first square
+                {1,9,8,3,4,2,5,6,7},
+                {8,5,9,7,6,1,4,2,3},
+                {4,2,6,8,5,3,7,9,1},
+                {7,1,null,9,2,4,8,5,6},
+                {9,6,1,5,3,7,2,8,4},
+                {2,8,7,4,1,9,6,3,5},
+                {3,4,5,2,8,6,1,7,9}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+
+    @Test
+    public void shouldCheckInvalidGridSquare2() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,4,null,null,null,null,null},
+                {null,null,null,null,4,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+
+    @Test
+    public void shouldCheckInvalidGridSquare3() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,null,null,null,null,1,null},
+                {null,null,null,null,null,null,null,null,1},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+    @Test
+    public void shouldCheckInvalidGridSquare4() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,2,null,null,null,null,null,null,null},
+                {2,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+
+    @Test
+    public void shouldCheckInvalidGridSquare5() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,1,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,1,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+
+    @Test
+    public void shouldCheckInvalidGridSquare6() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,2,null,null},
+                {null,null,null,null,null,null,null,2,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+    @Test
+    public void shouldCheckInvalidGridSquare7() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,4,null,null,null,null,null},
+                {null,null,null,null,4,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,1,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {1,null,null,null,null,null,null,null,null}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+
+    @Test
+    public void shouldCheckInvalidGridSquare8() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,2,null,null,null,null,null},
+                {null,null,null,null,2,null,null,null,null}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+    @Test
+    public void shouldCheckInvalidGridSquare9() throws Exception{
+        Integer[][] grid = {
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,null},
+                {null,null,null,null,null,null,null,null,3},
+                {null,null,null,null,null,null,3,null,null}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertFalse(checked);
+    }
+
+    @Test
+    public void shouldCheckValidGrid() throws Exception{
+        Integer[][] grid = {
+                {5,3,4,6,7,8,9,1,2},
+                {6,7,2,1,9,5,3,4,8},
+                {1,9,8,3,4,2,5,6,7},
+                {8,5,9,7,6,1,4,2,3},
+                {4,2,6,8,5,3,7,9,1},
+                {7,1,3,9,2,4,8,5,6},
+                {9,6,1,5,3,7,2,8,4},
+                {2,8,7,4,1,9,6,3,5},
+                {3,4,5,2,8,6,1,7,9}
+        };
+
+        boolean checked = SolveBacktracking.check(grid);
+
+        assertTrue(checked);
     }
 
     private Integer[][] createGridToSolve() {
