@@ -1,6 +1,8 @@
-package ro.robertgabriel;
+package ro.robertgabriel.backtrackingsudoku.algo;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import ro.robertgabriel.backtrackingsudoku.exceptions.UnsolvableException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,15 +10,21 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
+@Component
 public class SolveBacktracking {
-    public static final int n = 9;
-    public static boolean printFlag = false;
-    public static Integer[][] solve(Integer[][] grid) {
+    public SolveBacktracking(){ }
+
+    private static final int GRID_LENGTH = 9;
+    private boolean printFlag = false;
+    public  Integer[][] solve(Integer[][] grid) {
         boolean solved = addElement(grid, 0, 0);
+        if(!solved){
+            throw new UnsolvableException("Sudoku can not be solved");
+        }
         return grid;
     }
 
-    private static boolean addElement(Integer[][] grid, int i, int j) {
+    private  boolean addElement(Integer[][] grid, int i, int j) {
         int el = 1;
         if (!check(grid)) {
             return false;
@@ -48,8 +56,8 @@ public class SolveBacktracking {
                 }
             }
         }
-        for (int k = 0; k < n; k++) {
-            for (int l = 0; l < n; l++) {
+        for (int k = 0; k < GRID_LENGTH; k++) {
+            for (int l = 0; l < GRID_LENGTH; l++) {
                 if (grid[k][l] == null) {
                     return false;
                 }
@@ -58,20 +66,20 @@ public class SolveBacktracking {
         return true;
     }
 
-    public static boolean check(Integer[][] grid) {
+    public  boolean check(Integer[][] grid) {
         if (checkLines(grid)) return false;
         return !checkSquares(grid);
     }
 
-    private static boolean checkLines(Integer[][] grid) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = i + 1; k < n; k++) {
+    private  boolean checkLines(Integer[][] grid) {
+        for (int i = 0; i < GRID_LENGTH; i++) {
+            for (int j = 0; j < GRID_LENGTH; j++) {
+                for (int k = i + 1; k < GRID_LENGTH; k++) {
                     if (grid[i][j] != null && k != i && grid[k][j] != null && grid[i][j].equals(grid[k][j])) {
                         return true;
                     }
                 }
-                for (int m = j + 1; m < n; m++) {
+                for (int m = j + 1; m < GRID_LENGTH; m++) {
                     if (grid[i][j] != null && m != j && grid[i][m] != null && grid[i][j].equals(grid[i][m])) {
                         return true;
                     }
@@ -81,9 +89,9 @@ public class SolveBacktracking {
         return false;
     }
 
-    private static boolean checkSquares(Integer[][] grid) {
-        for (int i = 0; i < n; i = i + 3) {
-            for (int g = 0; g < n; g = g + 3) {
+    private  boolean checkSquares(Integer[][] grid) {
+        for (int i = 0; i < GRID_LENGTH; i = i + 3) {
+            for (int g = 0; g < GRID_LENGTH; g = g + 3) {
                 List<Integer> testArray = new ArrayList<>();
                 for (int m = i; m < i + 3; m++) {
                     for (int l = g; l < g + 3; l++) {
@@ -101,28 +109,33 @@ public class SolveBacktracking {
         return false;
     }
 
-    public static void printBoard(Integer[][] board) {
+    public void setPrintFlag(boolean printFlag) {
+        this.printFlag = printFlag;
+    }
+
+    public  void printBoard(Integer[][] board) {
         if (!printFlag) {
             return;
         }
+        StringBuilder sb = new StringBuilder("\n");
         for (int i = 0; i < 9; i++) {
-            System.out.print("|");
+            sb.append("|");
             for (int j = 0; j < 9; j++) {
                 String el = board[i][j] == null ? "-" : String.valueOf(board[i][j]);
-                System.out.print(" " + el + " ");
+                sb.append(" ").append(el).append(" ");
                 if (j % 3 == 2) {
-                    System.out.print("|");
+                    sb.append("|");
                 }
             }
             if (i % 3 == 2) {
-                System.out.println();
+                sb.append("\n");
                 for (int n = 0; n < 10 * 3 + 1; n++) {
-                    System.out.print("_");
+                    sb.append("_");
                 }
             }
-            System.out.println("");
+            sb.append("\n");
         }
-        System.out.println("==============================================");
-
+        sb.append("==============================================");
+        log.debug(sb.toString());
     }
 }

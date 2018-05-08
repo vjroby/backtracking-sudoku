@@ -1,22 +1,24 @@
-package ro.robertgabriel;
+package ro.robertgabriel.backtrackingsudoku.algo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import ro.robertgabriel.backtrackingsudoku.exceptions.UnsolvableException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class SolveBacktrackingTest {
 
+    private SolveBacktracking solveBacktracking = new SolveBacktracking();
+
     @Test
     public void shouldSolve() throws Exception{
-        Integer[][] resolved = SolveBacktracking.solve(createGridToSolve());
+        Integer[][] resolved = solveBacktracking.solve(createGridToSolve());
         for (int i = 0; i < 9; i++) {
-            assertArrayEquals("Sudoku should be solved",solved()[i],resolved[i]);
+            assertArrayEquals(solved()[i],resolved[i]);
         }
     }
 
@@ -50,18 +52,11 @@ public class SolveBacktrackingTest {
                 {null,null,null,null,null,null,null,null,null},
                 {1,4,1,null,5,null,null,6,null}
         };
+        Throwable exception = assertThrows(UnsolvableException.class, () -> {
+            solveBacktracking.solve(grid);
+        });
 
-        Integer[][] checked = SolveBacktracking.solve(grid);
-        boolean hasNulls = false;
-        for (int i = 0; i <9; i++) {
-            for (int j = 0; j < 9; j++) {
-              if(checked[i][j] == null){
-                  hasNulls = true;
-                  break;
-              }
-            }
-        }
-        assertTrue(hasNulls);
+        assertEquals("Sudoku can not be solved", exception.getMessage());
     }
 
 
@@ -79,7 +74,7 @@ public class SolveBacktrackingTest {
                 {3,4,5,2,8,6,1,4,9}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -98,7 +93,7 @@ public class SolveBacktrackingTest {
                 {3,4,5,9,8,6,1,4,9}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -117,7 +112,7 @@ public class SolveBacktrackingTest {
                 {3,4,5,2,8,6,1,7,9}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -136,7 +131,7 @@ public class SolveBacktrackingTest {
                 {null,null,null,null,null,null,null,null,null}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -155,7 +150,7 @@ public class SolveBacktrackingTest {
                 {null,null,null,null,null,null,null,null,null}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -173,7 +168,7 @@ public class SolveBacktrackingTest {
                 {null,null,null,null,null,null,null,null,null}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -192,7 +187,7 @@ public class SolveBacktrackingTest {
                 {null,null,null,null,null,null,null,null,null}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -211,7 +206,7 @@ public class SolveBacktrackingTest {
                 {null,null,null,null,null,null,null,null,null}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -229,7 +224,7 @@ public class SolveBacktrackingTest {
                 {1,null,null,null,null,null,null,null,null}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -248,7 +243,7 @@ public class SolveBacktrackingTest {
                 {null,null,null,null,2,null,null,null,null}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -266,7 +261,7 @@ public class SolveBacktrackingTest {
                 {null,null,null,null,null,null,3,null,null}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertFalse(checked);
     }
@@ -285,7 +280,7 @@ public class SolveBacktrackingTest {
                 {3,4,5,2,8,6,1,7,9}
         };
 
-        boolean checked = SolveBacktracking.check(grid);
+        boolean checked = solveBacktracking.check(grid);
 
         assertTrue(checked);
     }
@@ -303,9 +298,9 @@ public class SolveBacktrackingTest {
                 {2,8,7,4,1,9,6,3,5},
                 {3,4,5,2,8,6,1,7,9}
         };
-        SolveBacktracking.printFlag = true;
-        SolveBacktracking.printBoard(grid);
-        SolveBacktracking.printFlag = false;
+        solveBacktracking.setPrintFlag(true);
+        solveBacktracking.printBoard(grid);
+        solveBacktracking.setPrintFlag(false);
     }
 
     private Integer[][] createGridToSolve() {
