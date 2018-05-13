@@ -36,5 +36,6 @@
            </rowConstraints>
          </GridPane>
          <Button fx:id="solve" layoutX="22.0" layoutY="30.0" mnemonicParsing="false" onAction="#onPressSolve" text="Solve" />
+         <Button fx:id="demo" layoutX="216.0" layoutY="30.0" mnemonicParsing="false" onAction="#onDemoPress" text="Demo" />
       </children></AnchorPane>
 </VBox>

@@ -3,7 +3,6 @@ package ro.robertgabriel.backtrackingsudoku.controllers;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ro.robertgabriel.backtrackingsudoku.algo.SolveBacktracking;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -18,7 +18,6 @@ import java.util.List;
 @FXMLController
 public class SudokuController {
 
-    private static final int CELL_COUNT = 81;
     private static final int ROWS = 9;
 
     @FXML
@@ -27,13 +26,16 @@ public class SudokuController {
     @Autowired
     private SolveBacktracking solveBacktracking;
 
-    @FXML
-    private TableView<Integer> table;
+    @Autowired
+    private DemoData demoData;
 
     private List<TextField> textCells = new ArrayList<>();
 
     @FXML
     private Button solve;
+
+    @FXML
+    private Button demo;
 
     @FXML
     void initialize() {
@@ -57,8 +59,26 @@ public class SudokuController {
             }
         }
         solveBacktracking.setPrintFlag(true);
-        solveBacktracking.solve(grid);
+        Integer[][] solved = solveBacktracking.solve(grid);
+
+        fillTextCell(solved);
         log.debug(sb.toString());
+    }
+
+    private void fillTextCell(Integer[][] solved) {
+        Iterator<TextField> iteratorCells = textCells.iterator();
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                if(iteratorCells.hasNext()){
+                    String value = solved[j][i] == null? "" : String.valueOf(solved[j][i]);
+                    iteratorCells.next().setText(value);
+                }
+            }
+        }
+    }
+
+    public void onDemoPress() {
+        fillTextCell(demoData.getValues());
     }
 
     private void addInput() {
