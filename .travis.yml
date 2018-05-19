@@ -1,6 +1,6 @@
 language: java
 jdk:
-- oraclejdk9
+- oraclejdk8
 after_success:
 - "./gradlew test jacocoTestReport coveralls"
 - "./gradlew sonarqube -Dsonar.organization=vjroby-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARLOGIN"
