@@ -2,8 +2,8 @@ language: java
 jdk:
 - oraclejdk9
 after_success:
-- "./gradlew test jacocoTestReport coveralls"
-- "./gradlew sonarqube -Dsonar.organization=vjroby-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARLOGIN"
+#- "./gradlew test jacocoTestReport coveralls"
+#- "./gradlew sonarqube -Dsonar.organization=vjroby-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARLOGIN"
 env:
   global:
     secure: VAqiACEwk4HB6xTDcnSvQTDzTtDwkbeKTOst94teZdvIPdUu9OcUKpmJZSJDykXaXMpaxPlS0v10OTEqaQmt4ArrSv4t3QHf66ZeuQOzPlinWbfiDuxO1PzlO8QnIR6rbgdz5cmFYsQmAerqSyTIi6opk6kMi3L725Wzt6lFKprrOAUvHSek6vfQXf3ygrV/rcicgwnWvA4/i9aHBxEFCzvBADSeFnUvha0L6cXm/61cJdYYWxKhDLNj3lUmHQt4WoZYKnXUJwZmhcSxtzS9sPj83w++hP1dLTiZQ5JpytEHrnhmTbRJAuhAcpCv431TTaeR/54D0//A9eHuYvMQVBhYGDxXoq9Iyg0FANzSwEe0lRHcBkf+zgBJuvPI67QjhO43uqQA4pqy9iU+DTb+TY431gk7f3z+XtEBhqmRb9/z60QATBAq3y16a2QGGZompPG1/VW4p3+VHWlG+BnCZqIKZJt9TYelYxTVe4OK+zzoxc7h72Ial7Kzc8fc5/NNbUDMVVX+xRApdpxLfJu8tZfjWd7GriKjxa1iHS5Vh5ZQkA+5BOLOZ80gbTiuhuLzDCaAUje9AcdDKaQjqGmVwE1UPUn9wKxxMK61XYF+SBcIyruWfsVKDEjI2K98xKZjEQJSH33ZOGZy6UrdNn5QAsi5Uw8rZblMIXZWUSkUg4g=
