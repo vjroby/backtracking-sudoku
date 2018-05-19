@@ -8,6 +8,6 @@ import ro.robertgabriel.backtrackingsudoku.views.SudokuView;
 public class SudokuApplication extends AbstractJavaFxApplicationSupport {
 
     public static void main(String[] args) {
-        launchApp(SudokuApplication.class, SudokuView.class, args);
+        launch(SudokuApplication.class, SudokuView.class, args);
     }
 }

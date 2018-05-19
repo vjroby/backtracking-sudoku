@@ -33,13 +33,11 @@ public class SolveBacktracking {
         while (i <= 8 && j <= 8 && el <= 9) {
             if (grid[i][j] == null) {
                 grid[i][j] = el;
-                if (addElement(grid, i, j)) {
-                    continue;
-                } else {
+                if (!addElement(grid, i, j)) {
                     el = grid[i][j] + 1;
                     grid[i][j] = null;
-                    continue;
                 }
+                continue;
             }
             if (j == 8) {
                 i++;
@@ -64,19 +62,25 @@ public class SolveBacktracking {
 
     public boolean check(Integer[][] grid) {
         if (checkLines(grid)) return false;
-        return !checkSquares(grid);
+        return checkSquares(grid);
     }
 
     private boolean checkLines(Integer[][] grid) {
         for (int i = 0; i < GRID_LENGTH; i++) {
             for (int j = 0; j < GRID_LENGTH; j++) {
                 for (int k = i + 1; k < GRID_LENGTH; k++) {
-                    if (grid[i][j] != null && k != i && grid[k][j] != null && grid[i][j].equals(grid[k][j])) {
+                    if(grid[i][j] == null || grid[k][j] == null ) {
+                        continue;
+                    }
+                    if (grid[i][j].equals(grid[k][j])) {
                         return true;
                     }
                 }
                 for (int m = j + 1; m < GRID_LENGTH; m++) {
-                    if (grid[i][j] != null && m != j && grid[i][m] != null && grid[i][j].equals(grid[i][m])) {
+                    if(grid[i][j] == null ||  grid[i][m] == null){
+                        continue;
+                    }
+                    if (grid[i][j].equals(grid[i][m])) {
                         return true;
                     }
                 }
@@ -98,11 +102,11 @@ public class SolveBacktracking {
                 }
                 Set<Integer> testSet = new HashSet<>(testArray);
                 if (testSet.size() != testArray.size()) {
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     public void setPrintFlag(boolean printFlag) {
