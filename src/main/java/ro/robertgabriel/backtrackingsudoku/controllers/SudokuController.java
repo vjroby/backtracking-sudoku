@@ -23,11 +23,9 @@ public class SudokuController {
     @FXML
     private GridPane grid;
 
-    @Autowired
-    private SolveBacktracking solveBacktracking;
+    private final SolveBacktracking solveBacktracking;
 
-    @Autowired
-    private DemoData demoData;
+    private final DemoData demoData;
 
     private List<TextField> textCells = new ArrayList<>();
 
@@ -36,6 +34,12 @@ public class SudokuController {
 
     @FXML
     private Button demo;
+
+    @Autowired
+    public SudokuController(SolveBacktracking solveBacktracking, DemoData demoData) {
+        this.solveBacktracking = solveBacktracking;
+        this.demoData = demoData;
+    }
 
     @FXML
     void initialize() {

@@ -12,66 +12,62 @@ import java.util.Set;
 @Slf4j
 @Component
 public class SolveBacktracking {
-    public SolveBacktracking(){ }
 
     private static final int GRID_LENGTH = 9;
     private boolean printFlag = false;
-    public  Integer[][] solve(Integer[][] grid) {
+
+    public Integer[][] solve(Integer[][] grid) {
         boolean solved = addElement(grid, 0, 0);
-        if(!solved){
+        if (!solved) {
             throw new UnsolvableException("Sudoku can not be solved");
         }
         return grid;
     }
 
-    private  boolean addElement(Integer[][] grid, int i, int j) {
+    private boolean addElement(Integer[][] grid, int i, int j) {
         int el = 1;
         if (!check(grid)) {
             return false;
         }
         printBoard(grid);
-        boolean reversedB = false;
         while (i <= 8 && j <= 8 && el <= 9) {
-            reversedB = false;
             if (grid[i][j] == null) {
                 grid[i][j] = el;
-
                 if (addElement(grid, i, j)) {
                     continue;
                 } else {
-                    reversedB = true;
                     el = grid[i][j] + 1;
                     grid[i][j] = null;
-                }
-                if (el == 10) {
-                    return false;
+                    continue;
                 }
             }
-            if (!reversedB) {
-                if (j == 8) {
-                    i++;
-                    j = 0;
-                } else {
-                    j++;
-                }
+            if (j == 8) {
+                i++;
+                j = 0;
+            } else {
+                j++;
             }
         }
+        return !isNotSolved(grid);
+    }
+
+    private boolean isNotSolved(Integer[][] grid) {
         for (int k = 0; k < GRID_LENGTH; k++) {
             for (int l = 0; l < GRID_LENGTH; l++) {
                 if (grid[k][l] == null) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
-    public  boolean check(Integer[][] grid) {
+    public boolean check(Integer[][] grid) {
         if (checkLines(grid)) return false;
         return !checkSquares(grid);
     }
 
-    private  boolean checkLines(Integer[][] grid) {
+    private boolean checkLines(Integer[][] grid) {
         for (int i = 0; i < GRID_LENGTH; i++) {
             for (int j = 0; j < GRID_LENGTH; j++) {
                 for (int k = i + 1; k < GRID_LENGTH; k++) {
@@ -89,7 +85,7 @@ public class SolveBacktracking {
         return false;
     }
 
-    private  boolean checkSquares(Integer[][] grid) {
+    private boolean checkSquares(Integer[][] grid) {
         for (int i = 0; i < GRID_LENGTH; i = i + 3) {
             for (int g = 0; g < GRID_LENGTH; g = g + 3) {
                 List<Integer> testArray = new ArrayList<>();
@@ -113,7 +109,7 @@ public class SolveBacktracking {
         this.printFlag = printFlag;
     }
 
-    public  void printBoard(Integer[][] board) {
+    public void printBoard(Integer[][] board) {
         if (!printFlag) {
             return;
         }
