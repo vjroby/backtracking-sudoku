@@ -48,13 +48,21 @@ public class SudokuController {
 
     public void onPressSolve() {
         log.debug("Grid: values:");
+        Integer[][] grid = extractGridFromFields();
+        solveBacktracking.setPrintFlag(true);
+        Integer[][] solved = solveBacktracking.solve(grid);
+        fillTextCell(solved);
+    }
+
+    private Integer[][] extractGridFromFields() {
         StringBuilder sb = new StringBuilder();
         Integer[][] grid = new Integer[ROWS][ROWS];
         int i = 0, j = 0;
         for (TextField tf :
                 textCells) {
             sb.append("{").append(tf.getText()).append("}");
-            grid[j][i] = tf.getText().length() == 0 ? null: Integer.valueOf(tf.getText());
+
+            grid[j][i] = tf.getText().length() == 0 ? null : Integer.valueOf(tf.getText());
             if (j == 8) {
                 i++;
                 j = 0;
@@ -62,19 +70,16 @@ public class SudokuController {
                 j++;
             }
         }
-        solveBacktracking.setPrintFlag(true);
-        Integer[][] solved = solveBacktracking.solve(grid);
-
-        fillTextCell(solved);
         log.debug(sb.toString());
+        return grid;
     }
 
     private void fillTextCell(Integer[][] solved) {
         Iterator<TextField> iteratorCells = textCells.iterator();
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < ROWS; j++) {
-                if(iteratorCells.hasNext()){
-                    String value = solved[j][i] == null? "" : String.valueOf(solved[j][i]);
+                if (iteratorCells.hasNext()) {
+                    String value = solved[j][i] == null ? "" : String.valueOf(solved[j][i]);
                     iteratorCells.next().setText(value);
                 }
             }
@@ -86,13 +91,31 @@ public class SudokuController {
     }
 
     private void addInput() {
-
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < ROWS; j++) {
                 TextField tf = new TextField();
+                String borders = createTextFieldBorders(i, j);
+                tf.setStyle("-fx-border-color: black;-fx-border-width:" + borders);
                 grid.add(tf, i, j);
                 textCells.add(tf);
             }
         }
+    }
+
+    private String createTextFieldBorders(int i, int j) {
+        String[] borders = {"0", "0", "0", "0"};
+        if (i % 3 == 0) {
+            borders[3] = "1";
+        }
+        if (i == ROWS - 1) {
+            borders[1] = "1";
+        }
+        if (j % 3 == 0) {
+            borders[0] = "1";
+        }
+        if (j == ROWS - 1) {
+            borders[2] = "1";
+        }
+        return String.join(" ", borders);
     }
 }
