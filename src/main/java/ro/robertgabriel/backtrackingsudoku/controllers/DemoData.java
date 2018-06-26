@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 @Component
 public class DemoData {
@@ -21,6 +22,10 @@ public class DemoData {
 
     public Integer[][] getValues() {
         return games.get(random.nextInt(games.size()));
+    }
+
+    public Stream<Integer[][]> getGames() {
+        return games.stream();
     }
 
     private void addGames() {
