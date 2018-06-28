@@ -1,6 +1,8 @@
 package ro.robertgabriel.backtrackingsudoku.controllers;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ro.robertgabriel.backtrackingsudoku.algo.SolveBacktracking;
 import ro.robertgabriel.backtrackingsudoku.exceptions.UnsolvableException;
 
@@ -9,6 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class DemoDataTest {
 
     private DemoData demoData = new DemoData();
