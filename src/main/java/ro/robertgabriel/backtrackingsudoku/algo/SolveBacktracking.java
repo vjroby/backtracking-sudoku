@@ -2,6 +2,7 @@ package ro.robertgabriel.backtrackingsudoku.algo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ro.robertgabriel.backtrackingsudoku.controllers.GridObserver;
 import ro.robertgabriel.backtrackingsudoku.exceptions.UnsolvableException;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class SolveBacktracking {
 
     private static final int GRID_LENGTH = 9;
     private boolean printFlag = false;
+    private GridObserver gridObserver = new GridObserver((a, b, c) -> {
+    });
 
     public Integer[][] solve(Integer[][] grid) {
         boolean solved = addElement(grid, 0, 0);
@@ -32,9 +35,11 @@ public class SolveBacktracking {
         printBoard(grid);
         while (i <= 8 && j <= 8 && el <= 9) {
             if (grid[i][j] == null) {
+                gridObserver.onUpdate(el, i, j);
                 grid[i][j] = el;
                 if (!addElement(grid, i, j)) {
                     el = grid[i][j] + 1;
+                    gridObserver.onUpdate(null, i, j);
                     grid[i][j] = null;
                 }
                 continue;
@@ -69,7 +74,7 @@ public class SolveBacktracking {
         for (int i = 0; i < GRID_LENGTH; i++) {
             for (int j = 0; j < GRID_LENGTH; j++) {
                 for (int k = i + 1; k < GRID_LENGTH; k++) {
-                    if(grid[i][j] == null || grid[k][j] == null ) {
+                    if (grid[i][j] == null || grid[k][j] == null) {
                         continue;
                     }
                     if (grid[i][j].equals(grid[k][j])) {
@@ -77,7 +82,7 @@ public class SolveBacktracking {
                     }
                 }
                 for (int m = j + 1; m < GRID_LENGTH; m++) {
-                    if(grid[i][j] == null ||  grid[i][m] == null){
+                    if (grid[i][j] == null || grid[i][m] == null) {
                         continue;
                     }
                     if (grid[i][j].equals(grid[i][m])) {
@@ -137,5 +142,9 @@ public class SolveBacktracking {
         }
         sb.append("==============================================");
         log.debug(sb.toString());
+    }
+
+    public void setGridObserver(GridObserver gridObserver) {
+        this.gridObserver = gridObserver;
     }
 }
