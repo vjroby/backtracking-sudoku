@@ -1,14 +1,14 @@
 package ro.robertgabriel.backtrackingsudoku.controllers;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ro.robertgabriel.backtrackingsudoku.algo.SolveBacktracking;
 import ro.robertgabriel.backtrackingsudoku.exceptions.UnsolvableException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DemoDataTest {
 
